@@ -17,10 +17,14 @@
       @for (sleep of allSleepData; track sleep){
       <ion-item>
         <ion-label>{{sleep.dateString()}} | {{sleep.summaryString()}}</ion-label>
-
       </ion-item>
       }
     </ion-list>
+
+    <ion-datetime [(ngModel)]="waketime_start"></ion-datetime>
+    {{waketime_start}}
+    <ion-datetime [(ngModel)]="bedtime_start"></ion-datetime>
+    {{bedtime_start}}
 
   <div id="container">
     <strong>Ready to create an app?</strong>
