@@ -13,7 +13,10 @@ import { FormsModule } from '@angular/forms';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, FormsModule],
 })
 export class HomePage {
-	temp_date = new Date();
+	time = new Date().getTime();
+	utc_date = new Date(this.time);
+	local_time = this.time - this.utc_date.getTimezoneOffset() * 60 * 1000;
+	temp_date = new Date(this.local_time);
 	waketime_start = this.temp_date.toISOString();
 	bedtime_start = new Date(this.temp_date.getTime() - 8 * 60 * 60 * 1000).toISOString();
 
