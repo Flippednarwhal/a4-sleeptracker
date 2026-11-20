@@ -13,6 +13,15 @@
     </ion-toolbar>
   </ion-header>
 
+    <ion-list>
+      @for (sleep of allSleepData; track sleep){
+      <ion-item>
+        <ion-label>{{sleep.dateString()}} | {{sleep.summaryString()}}</ion-label>
+
+      </ion-item>
+      }
+    </ion-list>
+
   <div id="container">
     <strong>Ready to create an app?</strong>
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
