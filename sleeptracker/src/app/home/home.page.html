@@ -21,10 +21,29 @@
       }
     </ion-list>
 
-    <ion-datetime [(ngModel)]="waketime_start"></ion-datetime>
-    {{waketime_start}}
+    <h2>Bed time</h2>
     <ion-datetime [(ngModel)]="bedtime_start"></ion-datetime>
     {{bedtime_start}}
+
+    <h2>Wake time</h2>
+    <ion-datetime [(ngModel)]="waketime_start"></ion-datetime>
+    {{waketime_start}}
+
+    <ion-button (click)="save_sleep_date()">Save</ion-button>
+
+    <ion-list>
+      <ion-item>
+        <ion-select [(ngModel)]="sleepy_value" label="How tired are you?" placeholder="Choose Option">
+          @for (unit of scaleValues; track unit){
+            @if($index > 0){
+            <ion-select-option [value]="$index">{{$index}} {{unit}}</ion-select-option>
+            }
+          }
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-button (click)="save_sleepiness()">Save Sleepiness</ion-button>
 
   <div id="container">
     <strong>Ready to create an app?</strong>
