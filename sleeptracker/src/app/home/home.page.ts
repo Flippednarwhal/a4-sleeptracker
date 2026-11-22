@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, IonText} from '@ionic/angular/standalone';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, FormsModule],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, FormsModule, IonText],
 })
 export class HomePage {
 	time = new Date();
@@ -57,6 +57,14 @@ export class HomePage {
 	}
 
 
+	sleep_valid(){
+		let wake = new Date(this.waketime_start);
+		let sleep = new Date(this.bedtime_start);
+		if (wake.getTime() < sleep.getTime() || wake.getTime() == sleep.getTime()){
+			return false;
+		}
+		return true;
+	}
 
 	/* Ionic doesn't allow bindings to static variables, so this getter can be used instead. */
 	get allSleepData() {
@@ -66,4 +74,6 @@ export class HomePage {
 	get scaleValues() {
 		return StanfordSleepinessData.ScaleValues;
 	}
+
+
 }

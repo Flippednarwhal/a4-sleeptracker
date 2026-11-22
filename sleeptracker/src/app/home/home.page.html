@@ -29,7 +29,13 @@
     <ion-datetime [(ngModel)]="waketime_start"></ion-datetime>
     {{waketime_start}}
 
-    <ion-button (click)="save_sleep_date()">Save</ion-button>
+    <ion-button [disabled]="!sleep_valid()" (click)="save_sleep_date()">Save Sleep</ion-button>
+
+    @if(!sleep_valid()){
+      <ion-text color="danger">
+        <p>Invalid Date: Wake Time Before Bed time</p>
+      </ion-text>
+    }
 
     <ion-list>
       <ion-item>
