@@ -43,7 +43,8 @@
       </ion-item>
     </ion-list>
 
-    <ion-button (click)="save_sleepiness()">Save Sleepiness</ion-button>
+
+    <ion-button [disabled]="sleepy_value == 0" (click)="save_sleepiness()">Save Sleepiness</ion-button>
 
   <div id="container">
     <strong>Ready to create an app?</strong>

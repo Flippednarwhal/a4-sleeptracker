@@ -2,21 +2,24 @@ import { Injectable } from '@angular/core';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
+import { StorageService } from '../services/storage.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SleepService {
-	private static LoadDefaultData:boolean = true;
+	private static LoadDefaultData:boolean = false;
 	public static AllSleepData:SleepData[] = [];
 	public static AllOvernightData:OvernightSleepData[] = [];
 	public static AllSleepinessData:StanfordSleepinessData[] = [];
 
-	constructor() {
+	constructor(public storageService:StorageService) {
 		if(SleepService.LoadDefaultData) {
 			this.addDefaultData();
 		SleepService.LoadDefaultData = false;
 	}
+		this.retrieve_overnight();
+		this.retrieve_sleepiness();
 	}
 
 	private addDefaultData() {
@@ -38,13 +41,37 @@ export class SleepService {
 		this.logOvernightData(new OvernightSleepData(goToBed, wakeUp));
 	}
 
+	async retrieve_overnight(){
+		let retrieve_data = await this.storageService.get("Overnight");
+		if (retrieve_data){
+			for (const val of retrieve_data){
+				let temp_sleep = new OvernightSleepData(new Date(val.sleepStart), new Date(val.sleepEnd));
+				SleepService.AllSleepData.push(temp_sleep);
+				SleepService.AllOvernightData.push(temp_sleep);
+			}
+		}
+	}
+
+	async retrieve_sleepiness(){
+		let retrieve_data = await this.storageService.get("Sleepiness");
+		if (retrieve_data){
+			for (const val of retrieve_data){
+				let temp_sleep = new StanfordSleepinessData(val.loggedValue, new Date(val.loggedAt));
+				SleepService.AllSleepData.push(temp_sleep);
+				SleepService.AllSleepinessData.push(temp_sleep);
+			}
+		}
+	}
+
 	public logOvernightData(sleepData:OvernightSleepData) {
 		SleepService.AllSleepData.push(sleepData);
 		SleepService.AllOvernightData.push(sleepData);
+		this.storageService.set("Overnight", SleepService.AllOvernightData);
 	}
 
 	public logSleepinessData(sleepData:StanfordSleepinessData) {
 		SleepService.AllSleepData.push(sleepData);
 		SleepService.AllSleepinessData.push(sleepData);
+		this.storageService.set("Sleepiness", SleepService.AllSleepinessData);
 	}
 }
