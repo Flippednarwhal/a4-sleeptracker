@@ -15,7 +15,7 @@
 
     <ion-list>
       @for (sleep of allSleepData; track sleep){
-      <ion-item>
+      <ion-item (click)="tap_log(sleep)">
         <ion-label>{{sleep.dateString()}} | {{sleep.summaryString()}}</ion-label>
       </ion-item>
       }

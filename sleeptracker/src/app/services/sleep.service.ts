@@ -63,6 +63,30 @@ export class SleepService {
 		}
 	}
 
+	public delete_entry(sleep: SleepData){
+		let idx = SleepService.AllSleepData.indexOf(sleep);
+		if (idx != -1){
+			SleepService.AllSleepData.splice(idx, 1);
+		
+			if (sleep instanceof OvernightSleepData){
+				let idx = SleepService.AllOvernightData.indexOf(sleep);
+				if (idx != -1){
+					SleepService.AllOvernightData.splice(idx, 1);
+					this.storageService.set("Overnight", SleepService.AllOvernightData);
+				}
+			}
+
+			else if (sleep instanceof StanfordSleepinessData){
+				let idx = SleepService.AllSleepinessData.indexOf(sleep);
+				if (idx != -1){
+					SleepService.AllSleepinessData.splice(idx, 1);
+					this.storageService.set("Sleepiness", SleepService.AllSleepinessData);
+				}
+			}
+
+		}
+	}
+
 	public logOvernightData(sleepData:OvernightSleepData) {
 		SleepService.AllSleepData.push(sleepData);
 		SleepService.AllOvernightData.push(sleepData);

@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, IonText} from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, IonText, IonItemSliding} from '@ionic/angular/standalone';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { FormsModule } from '@angular/forms';
+import { ActionSheetController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, FormsModule, IonText],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, FormsModule, IonText, IonItemSliding],
 })
 export class HomePage {
 	time = new Date();
@@ -19,7 +20,7 @@ export class HomePage {
 	bedtime_start = this.time_conversion(this.sleep_time)
 	sleepy_value = 0;
 
-  constructor(public sleepService:SleepService) {
+  constructor(public sleepService:SleepService, private actionSheetController:ActionSheetController) {
 
 	}
 
@@ -54,6 +55,14 @@ export class HomePage {
 		console.log('wake:', this.waketime_start);
 		console.log(this.allSleepData);
 		
+	}
+
+	async tap_log(log:SleepData){
+		let sheet = await this.actionSheetController.create({ header: log.dateString(), buttons: [
+		{text: 'Delete', role: 'destructive', handler: () => this.sleepService.delete_entry(log)}, {text:'Cancel', role: 'cancel'}
+		]});
+
+		await sheet.present();
 	}
 
 

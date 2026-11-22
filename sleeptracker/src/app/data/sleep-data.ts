@@ -14,6 +14,10 @@ export class SleepData {
 		return 'Unknown sleep data';
 	}
 
+	logged_time():Date {
+		return this.loggedAt;
+	}
+
 	dateString():string {
 		return this.loggedAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 	}
