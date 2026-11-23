@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      Blank
+      Sleep Log
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,7 +16,7 @@
     <ion-list>
       @for (sleep of allSleepData; track sleep){
       <ion-item button (click)="tap_log(sleep)">
-        <ion-label>{{sleep.dateString()}} | {{sleep.summaryString()}}</ion-label>
+        <ion-label><h2>{{sleep.summaryString()}}</h2> <p>{{sleep.dateString()}}</p></ion-label>
       </ion-item>
       }
     </ion-list>
