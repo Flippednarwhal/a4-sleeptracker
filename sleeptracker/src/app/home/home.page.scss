@@ -1,3 +1,15 @@
 ion-content {
   --background: no-repeat center / cover url("/assets/stars.jpg");
 }
+
+ion-content.daytime {
+  --background: no-repeat center / cover url("/assets/sun.jpg");
+  
+}
+
+.daytime{
+  --ion-color-primary: #ccbc69;
+  --ion-color-secondary: #b39b25;
+  --ion-color-tertiary: #0b0b0b;
+}
+

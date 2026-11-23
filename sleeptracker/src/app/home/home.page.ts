@@ -6,12 +6,15 @@ import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { FormsModule } from '@angular/forms';
 import { ActionSheetController } from '@ionic/angular/standalone';
+import {addIcons} from 'ionicons'
+import {bedOutline, moonOutline, batteryHalfOutline} from 'ionicons/icons'
+import { IonIcon } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, FormsModule, IonText, IonItemSliding],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonDatetime, IonButton, IonSelect, IonSelectOption, FormsModule, IonText, IonItemSliding, IonIcon],
 })
 export class HomePage {
 	time = new Date();
@@ -21,7 +24,7 @@ export class HomePage {
 	sleepy_value = 0;
 
   constructor(public sleepService:SleepService, private actionSheetController:ActionSheetController) {
-
+		addIcons({moonOutline, batteryHalfOutline, bedOutline})
 	}
 
 	time_conversion(raw_time: Date): string{
@@ -76,6 +79,15 @@ export class HomePage {
 	}
 
 	/* Ionic doesn't allow bindings to static variables, so this getter can be used instead. */
+
+	get isDayTime() {
+		let time_of_day = new Date().getHours();
+		if (time_of_day > 6 && time_of_day < 18){
+			return true;
+		}
+		return false;
+	}
+
 	get allSleepData() {
 		let cpy_sleep = [...SleepService.AllSleepData];
 		let new_time = cpy_sleep.sort(function(a, b){return b.logged_time().getTime() - a.logged_time().getTime()})

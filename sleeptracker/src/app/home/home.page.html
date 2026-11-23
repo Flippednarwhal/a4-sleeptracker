@@ -1,12 +1,12 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-title>
+  <ion-toolbar color="primary" [class.daytime]="isDayTime">
+    <ion-title color="tertiary" [class.daytime]="isDayTime">
       Sleep Log
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [class.daytime]="isDayTime">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Blank</ion-title>
@@ -31,7 +31,7 @@
     <h2>Wake time</h2>
     <ion-datetime [(ngModel)]="waketime_start"></ion-datetime>
 
-    <ion-button [disabled]="!sleep_valid()" (click)="save_sleep_date()">Save Sleep</ion-button>
+    <ion-button [disabled]="!sleep_valid()" (click)="save_sleep_date()">Save Sleep <ion-icon name="bed-outline" slot="start"></ion-icon> </ion-button>
 
     @if(!sleep_valid()){
       <ion-text color="danger">
@@ -39,6 +39,7 @@
       </ion-text>
     }
 
+    <br><br>
     <ion-list>
       <ion-item>
         <ion-select [(ngModel)]="sleepy_value" label="How tired are you?" placeholder="Choose Option">
@@ -51,8 +52,8 @@
       </ion-item>
     </ion-list>
 
-
-    <ion-button [disabled]="sleepy_value == 0" (click)="save_sleepiness()">Save Sleepiness</ion-button>
+    
+    <ion-button [disabled]="sleepy_value == 0" (click)="save_sleepiness()">Save Sleepiness <ion-icon name="battery-half-outline" slot="start"></ion-icon></ion-button>
 
 
 </ion-content>
