@@ -15,19 +15,21 @@
 
     <ion-list>
       @for (sleep of allSleepData; track sleep){
-      <ion-item (click)="tap_log(sleep)">
+      <ion-item button (click)="tap_log(sleep)">
         <ion-label>{{sleep.dateString()}} | {{sleep.summaryString()}}</ion-label>
       </ion-item>
       }
     </ion-list>
 
+    @if (allSleepData.length == 0){
+      <p>No sleep data logged. Please add a sleep entry</p>
+    }
+
     <h2>Bed time</h2>
     <ion-datetime [(ngModel)]="bedtime_start"></ion-datetime>
-    {{bedtime_start}}
 
     <h2>Wake time</h2>
     <ion-datetime [(ngModel)]="waketime_start"></ion-datetime>
-    {{waketime_start}}
 
     <ion-button [disabled]="!sleep_valid()" (click)="save_sleep_date()">Save Sleep</ion-button>
 
@@ -52,8 +54,5 @@
 
     <ion-button [disabled]="sleepy_value == 0" (click)="save_sleepiness()">Save Sleepiness</ion-button>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+
 </ion-content>

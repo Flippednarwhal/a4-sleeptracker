@@ -77,7 +77,9 @@ export class HomePage {
 
 	/* Ionic doesn't allow bindings to static variables, so this getter can be used instead. */
 	get allSleepData() {
-		return SleepService.AllSleepData;
+		let cpy_sleep = [...SleepService.AllSleepData];
+		let new_time = cpy_sleep.sort(function(a, b){return b.logged_time().getTime() - a.logged_time().getTime()})
+		return new_time;
 	}
 
 	get scaleValues() {
