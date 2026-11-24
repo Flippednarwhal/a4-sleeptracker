@@ -6,10 +6,11 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true" [class.daytime]="isDayTime">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Sleep Log</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -24,6 +25,17 @@
     @if (allSleepData.length == 0){
       <p>No sleep data logged. Please add a sleep entry</p>
     }
+
+    <ion-card>
+      <ion-card-header><ion-text color="light">Average Sleep</ion-text></ion-card-header>
+      @if (average_sleep() != 0){
+        <ion-card-content><ion-card-title>{{format_ms(average_sleep())}}</ion-card-title></ion-card-content>
+      }
+      @else{
+        <ion-card-content>Log your sleep to see average</ion-card-content>
+      }
+    </ion-card>
+
 
     <h2>Bed time</h2>
     <ion-datetime [(ngModel)]="bedtime_start"></ion-datetime>
@@ -54,6 +66,7 @@
 
     
     <ion-button [disabled]="sleepy_value == 0" (click)="save_sleepiness()">Save Sleepiness <ion-icon name="battery-half-outline" slot="start"></ion-icon></ion-button>
+
 
 
 </ion-content>

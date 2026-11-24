@@ -42,6 +42,7 @@ export class SleepService {
 	}
 
 	async retrieve_overnight(){
+		// retrieves sleep logs from indexDB
 		let retrieve_data = await this.storageService.get("Overnight");
 		if (retrieve_data){
 			for (const val of retrieve_data){
@@ -53,6 +54,7 @@ export class SleepService {
 	}
 
 	async retrieve_sleepiness(){
+		//retrieve sleepiness logs from indexDB
 		let retrieve_data = await this.storageService.get("Sleepiness");
 		if (retrieve_data){
 			for (const val of retrieve_data){
@@ -64,10 +66,11 @@ export class SleepService {
 	}
 
 	public delete_entry(sleep: SleepData){
+		// removes a sleep log if it exists
 		let idx = SleepService.AllSleepData.indexOf(sleep);
 		if (idx != -1){
 			SleepService.AllSleepData.splice(idx, 1);
-		
+			// checks if the data belongs to sleep
 			if (sleep instanceof OvernightSleepData){
 				let idx = SleepService.AllOvernightData.indexOf(sleep);
 				if (idx != -1){
@@ -75,7 +78,7 @@ export class SleepService {
 					this.storageService.set("Overnight", SleepService.AllOvernightData);
 				}
 			}
-
+			// checks if the data belongs to sleepiness
 			else if (sleep instanceof StanfordSleepinessData){
 				let idx = SleepService.AllSleepinessData.indexOf(sleep);
 				if (idx != -1){
@@ -88,12 +91,14 @@ export class SleepService {
 	}
 
 	public logOvernightData(sleepData:OvernightSleepData) {
+		// add overnight entry to allsleep and overnight data
 		SleepService.AllSleepData.push(sleepData);
 		SleepService.AllOvernightData.push(sleepData);
 		this.storageService.set("Overnight", SleepService.AllOvernightData);
 	}
 
 	public logSleepinessData(sleepData:StanfordSleepinessData) {
+		// adds sleepiness to allsleep and sleepiness data
 		SleepService.AllSleepData.push(sleepData);
 		SleepService.AllSleepinessData.push(sleepData);
 		this.storageService.set("Sleepiness", SleepService.AllSleepinessData);
